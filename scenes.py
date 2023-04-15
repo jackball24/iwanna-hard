@@ -44,11 +44,11 @@ def load_scene_init(scene):
     scene.set_texts((
         ("Welcome to", (WIDTH / 2, 70), 'center', 100, 'white'),
 
-        ("I wanna be the dinosaur", (WIDTH / 2, 150), 'center', 50, 'white'),
+        ("I wanna be the ?", (WIDTH / 2, 150), 'center', 50, 'white'),
 
         # ("Press A/D to move\nPress K to jump", (135, 535), 'left', 24, 'white'),
 
-        ("Press J to continue...", (WIDTH / 2 + 240, 550), 'center', 20, 'white'),
+        ("Press J to continue...", (WIDTH / 2 + 240, 550), 'center', 20, 'brown'),
     ))
 
     # BLOCKS
@@ -81,10 +81,11 @@ def load_scene_start(scene):
     ))
 
     scene.set_texts((
-        ("Press A/D to move left and right\nPress K for longer or shorter time and for once or twice to get\n\tfamiliar with the sensitivity of jumping\nPress R to go back to the loaded rebirth point when you need\nPress J at flagpole to load or at cup to choose the difficulty", (WIDTH / 2, 120), 'left', 19, 'white'),
+        ("Press A/D to move left and right\nPress K for longer or shorter time and for once or twice to get\n\tfamiliar with the sensitivity of jumping\nPress R to go back to the loaded rebirth point when you need\nPress J at flagpole to load or at cup to choose the difficulty", (WIDTH / 2, 120), 'left', 19, 'black'),
         ("EASY", (get_x(5.5), get_y(14)), 'center', 16, 'white'),
         ("NORMAL", (get_x(12), get_y(14)), 'center', 16, 'white'),
-        ("HARD", (get_x(17.5), get_y(14)), 'center', 16, 'white')
+        ("HARD", (get_x(17.5), get_y(14)), 'center', 16, 'white'),
+        ("EASYEASY", (get_x(12), get_y(18)), 'center', 16, 'white'),
     ))
 
     # BLOCKS
@@ -94,7 +95,7 @@ def load_scene_start(scene):
         [(1, x + 1) for x in range(19)] +
         [(25, x + 2) for x in range(18)] +
         [(x + 2, 9) for x in range(23)] +
-        [(x + 2, 15) for x in range(21)]
+        [(x + 3, 15) for x in range(21)]
     )
 
     # LAYOUTS
@@ -106,8 +107,13 @@ def load_scene_start(scene):
     scene.set_endings((
         (4, 14),
         (10, 14),
-        (16, 14)
+        (16, 14),
+        (10, 18)
     ))
+
+
+    def set_dif_0():
+        scene.set_difficulty(0)
 
 
     def set_dif_1():
@@ -126,7 +132,81 @@ def load_scene_start(scene):
         (4, 14, set_dif_1),
         (10, 14, set_dif_2),
         (16, 14, set_dif_3),
+        (14, 18, set_dif_0),
     ))
+
+    # KID
+    scene.set_kid()
+
+    scene.append_objects()
+
+"""--------------------------------------SCENE0----------------------------------------"""
+def load_scene0(scene):
+
+    # DECORATIONS
+    scene.set_style(choice(colors))
+
+    scene.set_decorations((
+        ('scene2', 0, 0),
+    ))
+
+    scene.set_texts((
+        ("关卡1", (65, 50), 'center',20, 'orange'),
+    ))
+    # BRICKS
+    scene.set_bricks(
+        [(x + 1, 19) for x in range(24)] +
+        [(x + 2, 1) for x in range(24)] +
+        [(1, x + 1) for x in range(19)] +
+        [(4, x + 3) for x in range(7)] +
+        [(25, x + 2) for x in range(18)] +
+        [(x + 4, 9) for x in range(7)] +
+        [(x + 15, 9) for x in range(11)] +
+        [(x + 2, 15) for x in range(21)] +
+        [
+            (2, 11),
+            (3, 9),
+            (2, 5),
+        ]
+
+    )
+
+    # THORNS
+    scene.set_thorns((
+        (6, 18, 'up'),
+        (8, 18, 'up'),
+        (10, 18, 'up'),
+        (12, 18, 'up'),
+        (16, 18, 'up'),
+        (16, 17, 'up'),
+        (19, 18, 'up'),
+        (20, 14, 'up'),
+        (19, 14, 'up'),
+        (17, 14, 'up'),
+        (16, 14, 'up'),
+        (12, 14, 'up'),
+        (11, 14, 'up'),
+        (10, 14, 'up'),
+        (9, 14, 'up'),
+        (5, 8, 'up'),
+        (6, 8, 'up'),
+        (7, 8, 'up'),
+        (8, 8, 'up'),
+        (9, 8, 'up'),
+        (10, 8, 'up'),
+    ))
+
+    # LAYOUTS
+    scene.set_savers((
+        (3, 18, 1, 4),
+
+
+    ))
+
+    scene.set_endings((
+        (24, 8),
+    ))
+
 
     # KID
     scene.set_kid()
@@ -141,9 +221,11 @@ def load_scene1(scene):
     scene.set_style(choice(colors))
 
     scene.set_decorations((
-        ('scene2', 0, 0),
+        ('scene3', 0, 0),
     ))
-
+    scene.set_texts((
+        ("关卡2", (65, 50), 'center', 20, 'orange'),
+    ))
     # BRICKS
     scene.set_bricks(
         [(x + 1, 19) for x in range(24)] +
@@ -154,6 +236,7 @@ def load_scene1(scene):
         [(x + 5, 11) for x in range(20)] +
         [(x + 2, 6) for x in range(21)] +
         [
+
             (7, 2),
             (7, 3),
             (9, 2),
@@ -163,6 +246,8 @@ def load_scene1(scene):
             (19, 5),
             (11, 9),
             (23, 10),
+            (20, 14),
+
         ]
     )
 
@@ -178,11 +263,11 @@ def load_scene1(scene):
         (20, 18, 'up'),
         (22, 15, 'right'),
         (24, 15, 'left'),
-        (19, 12, 'down'),
-        (18, 14, 'up'),
-        (15, 12, 'down'),
-        (14, 14, 'up'),
-        (13, 12, 'down'),
+        (18, 12, 'down'),
+        (17, 14, 'up'),
+        (14, 12, 'down'),
+        (13, 14, 'up'),
+        (12, 12, 'down'),
         (10, 14, 'up'),
         (9, 14, 'up'),
         (8, 14, 'up'),
@@ -222,9 +307,17 @@ def load_scene1(scene):
     # LAYOUTS
     scene.set_savers((
         (3, 18, 1, 4),
-        (21, 14, 2, 1),
-        (5, 10, 3, 2),
-        (22, 5, 4, 1)
+        (14.5, 18, 2, 0),
+        (24, 18, 3, 0),
+        (19, 14, 4, 1),
+        (11.5, 14, 5, 0),
+        (2.5, 14, 6, 0),
+        (5, 10, 7, 2),
+        (11, 8, 8, 0),
+        (16, 10, 9, 0),
+        (22, 5, 10, 1),
+        (13.5, 5, 11, 0),
+        (9, 5, 12, 0)
     ))
 
     scene.set_endings((
@@ -244,9 +337,11 @@ def load_scene2(scene):
     scene.set_style(choice(colors))
 
     scene.set_decorations((
-        ('scene3', 0, 0),
+        ('scene4', 0, 0),
     ))
-
+    scene.set_texts((
+        ("关卡3", (65, 50), 'center', 20, 'orange'),
+    ))
     # BRICKS
     scene.set_bricks(
         [(x + 1, 19) for x in range(24)] +
@@ -355,9 +450,14 @@ def load_scene2(scene):
     # LAYOUTS
     scene.set_savers((
         (5, 15, 1, 4),
-        (10, 9, 2, 1),
-        (23, 2, 3, 2),
-        (17, 10, 4, 1)
+        (3, 13, 2, 0),
+        (4, 7, 3, 0),
+        (16, 6, 4, 0),
+        (10, 9, 5, 1),
+        (23, 2, 6, 2),
+        (17, 10, 7, 1),
+        (23, 12, 8, 0),
+        (14, 18, 9, 0)
     ))
 
     scene.set_endings((
@@ -376,9 +476,11 @@ def load_scene3(scene):
     scene.set_style(choice(colors))
 
     scene.set_decorations((
-        ('scene4', 0, 0),
+        ('scene5', 0, 0),
     ))
-
+    scene.set_texts((
+        ("关卡4", (65, 50), 'center', 20, 'orange'),
+    ))
     # BRICKS
     scene.set_bricks(
         [(x + 1, 19) for x in range(24)] +
@@ -494,9 +596,13 @@ def load_scene3(scene):
     # LAYOUTS
     scene.set_savers((
         (8, 15, 1, 4),
-        (14, 5, 2, 1),
-        (24,18, 3, 2),
-        (13,18, 4, 1)
+        (2, 18, 2, 0),
+        (4, 6, 3, 0),
+        (14, 5, 4, 1),
+        (21, 9, 5, 0),
+        (24, 18, 6, 2),
+        (13, 18, 7, 1),
+        (13, 12, 8, 0)
 
     ))
 
@@ -515,9 +621,11 @@ def load_scene4(scene):
     scene.set_style(choice(colors))
     # BACKGOUND
     scene.set_decorations((
-        ('scene5', 0, 0),
+        ('scene6', 0, 0),
     ))
-
+    scene.set_texts((
+        ("关卡5", (65, 50), 'center', 20, 'orange'),
+    ))
     # BRICKS
     scene.set_bricks(
         [(x + 9, 1) for x in range(3)] +
@@ -621,9 +729,14 @@ def load_scene4(scene):
     # LAYOUTS
     scene.set_savers((
         (2, 2, 1, 4),
-        (18, 2, 2, 1),
-        (2, 13, 3, 2),
-        (23, 14, 4, 1)
+        (12, 4, 2, 0),
+        (18, 2, 3, 1),
+        (10, 9, 4, 0),
+        (2, 13, 5, 2),
+        (7, 14, 6, 0),
+        (12, 18, 7, 0),
+        (23, 14, 8, 1),
+        (20, 8, 9, 0)
 
     ))
 
@@ -645,9 +758,11 @@ def load_scene5(scene):
     scene.set_style(choice(colors))
 
     scene.set_decorations((
-        ('scene6', 0, 0),
+        ('scene7', 0, 0),
     ))
-
+    scene.set_texts((
+        ("关卡6", (65, 50), 'center', 20, 'orange'),
+    ))
     # BRICKS
     scene.set_bricks(
         [(x + 15, 19) for x in range(10)] +
@@ -786,10 +901,13 @@ def load_scene5(scene):
     # LAYOUTS
     scene.set_savers((
         (3, 16, 1, 4),
-        (8, 9, 2, 1),
-        (11, 6, 3, 2),
-        (19, 9, 4, 1),
-
+        (10, 18, 2, 0),
+        (8, 9, 3, 1),
+        (5, 6, 4, 0),
+        (11, 6, 5, 2),
+        (16, 18, 6, 0),
+        (19, 9, 7, 1),
+        (23, 2, 8, 0)
     ))
 
     scene.set_endings((
@@ -817,8 +935,8 @@ def load_scene_terminal(scene):
     ))
     scene.set_texts((
         ("Thanks for your enjoying\nMore scenes are coming...\n\nPress J to exit", (500, 130), 'center', 30, 'white'),
-        ("I wanna be the dinosaur\nVersion:{}".format(VERSION), (WIDTH / 2, 360), 'center', 40, 'white'),
-        ("Contact us: habibzhu@foxmail.com".format(VERSION), (WIDTH / 2, 440), 'center', 25, 'white'),
+        ("I wanna be the ?\nVersion:{}".format(VERSION), (WIDTH / 2, 360), 'center', 40, 'white'),
+        ("Contact us: B21031923/24/25/28".format(VERSION), (WIDTH / 2, 440), 'center', 25, 'white'),
         ("Difficulty:{}".format({'0':'Cheat', '1':'Easy', '2':'Normal', '3':'Hard'}[str(scene.difficulty)]), (200, 490), 'left', 25, 'red'),
         ("Death:{} times".format(scene.sum_death), (540, 490), 'left', 25, 'red')
     ))
@@ -854,6 +972,7 @@ def load_scene_terminal(scene):
 
 scenes.append(Scene(load_scene_init))
 scenes.append(Scene(load_scene_start))
+scenes.append(Scene(load_scene0))
 scenes.append(Scene(load_scene1))
 scenes.append(Scene(load_scene2))
 scenes.append(Scene(load_scene3))

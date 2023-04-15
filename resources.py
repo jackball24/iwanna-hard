@@ -1,3 +1,5 @@
+import time
+
 from pgzero.actor import Actor
 from pgzero.keyboard import keyboard
 from pgzero.loaders import sounds
@@ -5,6 +7,7 @@ import pgzrun
 from math import sqrt
 from math_funcs import *
 from pkg_resources.extern import packaging
+from random import choice
 
 # 方块尺寸
 SIZE_X = 30
@@ -46,7 +49,7 @@ class Kid(Actors):
     """
     Kid类 用户操纵人物的单实例类
 
-    :param jumping,jumped,has_jumped,jump1,jump1 用于实现可长按跳跃与二段跳跃算法的相关变量
+    :param jumping,jumped,has_jumped,jump1,jump2 用于实现可长按跳跃与二段跳跃算法的相关变量
     :param gravity 实现重力效果
     :param visible 可见性用于处理死亡事件
     :param rebirth_location 重生点用于处理存档、复活事件
@@ -85,7 +88,6 @@ class Kid(Actors):
 
     def jump(self, scene):
         """配合move_y处理跳跃事件"""
-
         if self.block_check('up', scene):
             self.y_velocity = -COEFFICIENT_OF_RESTITUTION * self.y_velocity
         if keyboard.k and self.jump1 == 0:
@@ -116,7 +118,6 @@ class Kid(Actors):
 
     def fall(self, scene):
         """配合move_y处理重力下落"""
-
         if self.block_check('down', scene):
             self.y_velocity = 0
         else:
@@ -135,17 +136,13 @@ class Kid(Actors):
         elif self.x_velocity < 0:
             self.x_image = 'left'
         if self.y_velocity == 0:
-            self.y_image = 'stand'
+            self.y_image = 'run1'
         elif self.y_velocity > 0:
             self.y_image = 'jump'
         elif self.y_velocity < 0:
             self.y_image = 'fall'
-
         self.act.image = self.y_image + self.x_image
 
-    def shoot(self):
-        """实现kid的射击动作"""
-        pass
 
     def die(self, scene):
         """处理死亡事件:碰刺或者掉出界面"""
@@ -153,14 +150,16 @@ class Kid(Actors):
             scene.death += 1
             sounds.diesound.play()
             self.visible = False
+            scene.texts.append(Text(text="death:"+str(scene.death), center=(380, 300),align='center', fontsize=40, color='red')),
             scene.texts.append(Text("Press R to retry!", center=(WIDTH / 2, HEIGHT / 2 + 150),
                          fontsize=30, color='white'))
             scene.texts.append(Text("GAME OVER", center=(WIDTH / 2, HEIGHT / 2 - 100),
                                     fontsize=100, color='white'))
             scene.blackcurtain = True
+
         if keyboard.r:
             if scene.blackcurtain:
-                for i in range(len(scene.texts)):
+                for i in range(3):
                     scene.texts.pop()
                 scene.blackcurtain = False
             self.visible = True
@@ -245,17 +244,6 @@ class Kid(Actors):
         return collide
 
 
-class Bullet(Actors):
-    """子弹类，尚未实现"""
-    def __init__(self, image_name, init_x, init_y, direction):
-        super().__init__(image_name, init_x, init_y)
-        self.direction = direction
-
-    def move(self):
-        pass
-
-    def perish(self):
-        pass
 
 
 class Objects(object):
@@ -294,15 +282,6 @@ class Brick(Block):
         self.size_x = 30
         self.size_y = 30
 
-
-class Board(Block):
-    """会移动的板子，尚未实现"""
-    pass
-
-
-class Shattered_brick:
-    """踩踏后会碎裂的砖块，尚未实现"""
-    pass
 
 
 class Lethal(Objects):
@@ -358,24 +337,6 @@ class Thorn(Lethal):
             self.y3 = init_y + 15
 
 
-class Apple(Lethal):
-    """致死物苹果，尚未实现"""
-    pass
-
-
-class Dart(Lethal):
-    """致死物忍者标，尚未实现"""
-    pass
-
-
-class Vine(Objects):
-    """可刷新跳跃的藤蔓，尚未实现"""
-    pass
-
-
-class Water(Objects):
-    """可以在其中游泳的水，尚未实现"""
-    pass
 
 
 class Layout(Objects):
@@ -423,21 +384,18 @@ class Saver(Layout):
         if self.num == 1:
             self.act.image = 'load'
 
-
     def action(self, kid, scene):
-        """保存点动作函数，重置重生点为当前保存点，将以前保存点改为失效贴图，将当前保存点改为生效贴图"""
+        """保存点动作函数，重置重生点为当前保存点，修改保存点贴图"""
         if self.act.image == 'unload':
             sounds.loadsound.play()
-        if kid.rebirth_location < self.num:
+        if kid.rebirth_location != self.num:
             kid.rebirth_location = self.num
             self.act.image = "load"
             for i in scene.savers:
-                if i.num < self.num and i.visible:
-                    i.act.image = "hasload"
+                if i.num != self.num and i.visible:
+                    i.act.image = "unload"
 
-class Starting(Layout):
-    """出生点，尚未实现，现以第一个保存点代替"""
-    pass
+
 
 
 class Ending(Layout):

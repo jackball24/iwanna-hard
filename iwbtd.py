@@ -54,7 +54,7 @@ def update():
             if scene.need_press_j:
                 clock.schedule_unique(scene.set_j,1)
 
-i = 0  # 场景序号
+i = 0  # 场景序ar号
 scene = scenes[i]  # 提取场景
 scene.load()
 pgzrun.go()  # pycharm环境下需要调用pgzrun.go()启动程序
